@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
+                        <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I2Y-hJ-cD0">
+                                <rect key="frame" x="27" y="117.5" width="320" height="432"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="microphone" translatesAutoresizingMaskIntoConstraints="NO" id="5iy-fc-abd">
+                                        <rect key="frame" x="30" y="26" width="280" height="280"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="5iy-fc-abd" secondAttribute="height" multiplier="1:1" id="k5Q-Lq-AsT"/>
+                                            <constraint firstAttribute="height" constant="280" id="zgn-95-Ywd"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="camera" translatesAutoresizingMaskIntoConstraints="NO" id="Sep-Um-cZT">
+                                        <rect key="frame" x="30" y="217" width="147" height="147"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="147" id="aDP-rX-NB1"/>
+                                            <constraint firstAttribute="width" secondItem="Sep-Um-cZT" secondAttribute="height" multiplier="1:1" id="sDy-dN-LlO"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="432" id="5xL-mX-rKa"/>
+                                    <constraint firstItem="5iy-fc-abd" firstAttribute="top" secondItem="I2Y-hJ-cD0" secondAttribute="top" constant="26" id="Am7-Ol-FlX"/>
+                                    <constraint firstItem="Sep-Um-cZT" firstAttribute="leading" secondItem="I2Y-hJ-cD0" secondAttribute="leading" constant="30" id="Ng3-k8-tRX"/>
+                                    <constraint firstItem="Sep-Um-cZT" firstAttribute="top" secondItem="I2Y-hJ-cD0" secondAttribute="top" constant="217" id="PsV-22-AjE"/>
+                                    <constraint firstItem="5iy-fc-abd" firstAttribute="leading" secondItem="I2Y-hJ-cD0" secondAttribute="leading" constant="30" id="RNb-Vt-dXl"/>
+                                    <constraint firstAttribute="width" constant="320" id="icb-Mb-Kl0"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.78823529411764703" green="0.34901960784313724" blue="0.4823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="I2Y-hJ-cD0" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="8Yv-Ln-4lo"/>
+                            <constraint firstItem="I2Y-hJ-cD0" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="KNO-id-lTV"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="camera" width="128" height="128"/>
+        <image name="microphone" width="256" height="256"/>
+    </resources>
+</document>

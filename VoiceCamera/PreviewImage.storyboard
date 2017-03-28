@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="C22-ka-Brp">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Preview Image View Controller-->
+        <scene sceneID="52U-Te-94P">
+            <objects>
+                <viewController storyboardIdentifier="PreviewImage" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="C22-ka-Brp" customClass="PreviewImageViewController" customModule="VoiceCamera" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="d7R-tp-DEq"/>
+                        <viewControllerLayoutGuide type="bottom" id="U7z-6D-4Yl"/>
+                    </layoutGuides>
+                    <view key="view" tag="1" contentMode="scaleToFill" id="NdS-cr-TIa">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0DC-Go-S2e">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RbU-cW-Bjn">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="598"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vb3-AH-JHB">
+                                        <rect key="frame" x="198" y="598" width="177" height="49"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <state key="normal" title="保存">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="saveBtn:" destination="C22-ka-Brp" eventType="touchUpInside" id="Mw3-4S-P0N"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jzb-Ah-6Kh">
+                                        <rect key="frame" x="0.0" y="598" width="190" height="49"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="190" id="Jr1-kU-ywY"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <state key="normal" title="キャンセル">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="cancelBtn:" destination="C22-ka-Brp" eventType="touchUpInside" id="sja-Ay-U4q"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="RbU-cW-Bjn" secondAttribute="bottom" constant="49" id="Atl-0x-YwL"/>
+                                    <constraint firstItem="vb3-AH-JHB" firstAttribute="top" secondItem="RbU-cW-Bjn" secondAttribute="bottom" id="EXk-vu-kue"/>
+                                    <constraint firstItem="Jzb-Ah-6Kh" firstAttribute="leading" secondItem="0DC-Go-S2e" secondAttribute="leading" id="KaP-yK-rAt"/>
+                                    <constraint firstItem="vb3-AH-JHB" firstAttribute="leading" secondItem="Jzb-Ah-6Kh" secondAttribute="trailing" constant="8" id="LwL-IL-Bn1"/>
+                                    <constraint firstAttribute="bottom" secondItem="vb3-AH-JHB" secondAttribute="bottom" id="PVP-FR-ctb"/>
+                                    <constraint firstItem="RbU-cW-Bjn" firstAttribute="leading" secondItem="0DC-Go-S2e" secondAttribute="leading" id="S1w-eb-U1e"/>
+                                    <constraint firstAttribute="trailing" secondItem="vb3-AH-JHB" secondAttribute="trailing" id="Uwy-xU-ef8"/>
+                                    <constraint firstAttribute="bottom" secondItem="Jzb-Ah-6Kh" secondAttribute="bottom" id="Wq5-xG-jAI"/>
+                                    <constraint firstAttribute="trailing" secondItem="RbU-cW-Bjn" secondAttribute="trailing" id="jOa-mx-EQO"/>
+                                    <constraint firstItem="RbU-cW-Bjn" firstAttribute="top" secondItem="0DC-Go-S2e" secondAttribute="top" id="sT1-UM-JEA"/>
+                                    <constraint firstItem="Jzb-Ah-6Kh" firstAttribute="top" secondItem="RbU-cW-Bjn" secondAttribute="bottom" id="vci-lV-AOR"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.2179247359" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="0DC-Go-S2e" firstAttribute="top" secondItem="d7R-tp-DEq" secondAttribute="bottom" id="2rQ-Ns-S4D"/>
+                            <constraint firstItem="U7z-6D-4Yl" firstAttribute="top" secondItem="0DC-Go-S2e" secondAttribute="bottom" id="Apv-Wv-6Tf"/>
+                            <constraint firstAttribute="trailing" secondItem="0DC-Go-S2e" secondAttribute="trailing" id="Nb4-hx-Z0i"/>
+                            <constraint firstItem="0DC-Go-S2e" firstAttribute="leading" secondItem="NdS-cr-TIa" secondAttribute="leading" id="hKv-DD-m9R"/>
+                        </constraints>
+                    </view>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
+                    <connections>
+                        <outlet property="ImageView" destination="RbU-cW-Bjn" id="Ku6-Eh-Zeb"/>
+                        <outlet property="cancelBtn" destination="Jzb-Ah-6Kh" id="Jc9-W5-thy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AyO-87-Bxt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1008.8" y="94.902548725637189"/>
+        </scene>
+    </scenes>
+</document>
