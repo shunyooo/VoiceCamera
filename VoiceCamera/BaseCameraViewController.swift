@@ -14,7 +14,7 @@ import CoreMotion
 
 //カメラクラスの基底クラスとなる。共通機能などを実装。
 class BaseCameraViewController: UIViewController ,AVCapturePhotoCaptureDelegate, UIGestureRecognizerDelegate{
-
+    
     
     //解像度選択
     let mySessionPreset:String = AVCaptureSessionPresetPhoto
@@ -54,6 +54,7 @@ class BaseCameraViewController: UIViewController ,AVCapturePhotoCaptureDelegate,
     
     var flashMode:AVCaptureFlashMode! = .off
     
+    
     @IBOutlet weak var flashModeBtn: UIButton!
     
     @IBAction func flashModeBtn(_ sender: Any) {
@@ -70,7 +71,6 @@ class BaseCameraViewController: UIViewController ,AVCapturePhotoCaptureDelegate,
     // ボタンを押した時呼ばれる
     @IBAction func takeIt(_ sender: AnyObject) {
     }
-    
     
     override func viewDidLoad() {
         
@@ -90,6 +90,12 @@ class BaseCameraViewController: UIViewController ,AVCapturePhotoCaptureDelegate,
         camera = AVCaptureDevice.defaultDevice(withDeviceType: .builtInWideAngleCamera,
                                                mediaType: AVMediaTypeVideo,
                                                position: .back)
+        
+        //露出をロックする必要がない気がするので、やめた。
+        //camera.addObserver(self, forKeyPath: "adjustingExposure", options: .new, context: nil)
+        
+        self.zoomSlider.isHidden = true
+        self.zoomSlider.alpha = 0
     }
     
     // モーション系の初期化
@@ -198,26 +204,33 @@ class BaseCameraViewController: UIViewController ,AVCapturePhotoCaptureDelegate,
         
         
         
-        self.focusWithMode(focusMode: AVCaptureFocusMode.autoFocus, exposeWithMode: AVCaptureExposureMode.autoExpose, atDevicePoint: tapCGPoint, motiorSubjectAreaChange: true)
+        self.focusWithMode(focusMode: AVCaptureFocusMode.autoFocus, exposeWithMode: AVCaptureExposureMode.continuousAutoExposure, atDevicePoint: tapCGPoint, motiorSubjectAreaChange: true)
     }
     
-    
+    //露出が調整中かどうかを返す。
+    var adjustingExposure = false
     
     
     func focusWithMode(focusMode : AVCaptureFocusMode, exposeWithMode expusureMode :AVCaptureExposureMode, atDevicePoint point:CGPoint, motiorSubjectAreaChange monitorSubjectAreaChange:Bool) {
         
+        let pointOfInterest:CGPoint  = CGPoint(x:point.y / self.view.bounds.size.height,
+                                               y:1.0 - point.x / self.view.bounds.size.width);
+        
         let device : AVCaptureDevice = self.input.device
-        print(point)
+        print(point,pointOfInterest)
         
         do {
             try device.lockForConfiguration()
             if(device.isFocusPointOfInterestSupported && device.isFocusModeSupported(focusMode)){
-                device.focusPointOfInterest = point
+                device.focusPointOfInterest = pointOfInterest
                 device.focusMode = focusMode
+                print("focus Mode:",device.focusMode.rawValue)
             }
             if(device.isExposurePointOfInterestSupported && device.isExposureModeSupported(expusureMode)){
-                device.exposurePointOfInterest = point
+                adjustingExposure = true
+                device.exposurePointOfInterest = pointOfInterest
                 device.exposureMode = expusureMode
+                print("exposure Mode:",device.exposureMode.rawValue)
             }
             
             device.isSubjectAreaChangeMonitoringEnabled = monitorSubjectAreaChange
@@ -229,11 +242,59 @@ class BaseCameraViewController: UIViewController ,AVCapturePhotoCaptureDelegate,
     }
     
     
+    //viewDidloadのaddobseverで登録できるが、露出を固定する必要はないので、やめた。
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        print("forKeyPath:",keyPath ?? "nil")
+        
+        //露出が調整中じゃない時は処理を返す
+        if (!self.adjustingExposure) {
+            return
+        }
+        //露出の情報
+        if keyPath == "adjustingExposure" {
+            let isNew = change?[NSKeyValueChangeKey.newKey]
+            if (isNew != nil) {
+                //露出が決定した
+                self.adjustingExposure = false
+                //露出を固定する
+                let camera: AVCaptureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
+                do {
+                    try camera.lockForConfiguration()
+                    print("locked Exprosure")
+                    camera.exposureMode = AVCaptureExposureMode.locked
+                    camera.unlockForConfiguration()
+                } catch {
+                    //
+                }
+            }
+        }
+    }
     
+    var pinchState:UIGestureRecognizerState = .ended
+    var pinchId:Int = 0
     
     func pinchedGesture(gestureRecgnizer: UIPinchGestureRecognizer) {
         do {
             try camera.lockForConfiguration()
+            self.pinchState = gestureRecgnizer.state
+            
+            print(checkState(self.pinchState))
+            
+            // スライドバーがクリアされていて、初めてタッチされた時、表示。
+            if pinchState == .began && pinchId == 0{
+                
+                print("animate appear")
+                self.zoomSlider.isHidden = false
+                UIView.animate(withDuration: 0.1, animations: {
+                    self.zoomSlider.alpha = 1
+                }, completion: { finished in
+                })
+            }
+            
+            // スライドバーが消えるアニメーション中にピンチしてしまった場合のため
+            self.zoomSlider.isHidden = false
+            
+            
             // ズームの最大値
             let maxZoomScale: CGFloat = 6.0
             // ズームの最小値
@@ -262,6 +323,22 @@ class BaseCameraViewController: UIViewController ,AVCapturePhotoCaptureDelegate,
             // 画面から指が離れたとき、stateがEndedになる。
             if gestureRecgnizer.state == .ended {
                 oldZoomScale = currentZoomScale
+                self.pinchState = gestureRecgnizer.state
+                self.pinchId += 1
+                //何秒か後に消す。
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                    self.pinchId -= 1
+                    print("gestureRecgnizer.id",self.pinchId)
+                    
+                    // pinchIdが0は、最後に触られたことを示す。
+                    if self.pinchState == .ended && self.pinchId == 0{
+                        UIView.animate(withDuration: 1, animations: {
+                            self.zoomSlider.alpha = 0
+                        }, completion: { finished in
+                            self.zoomSlider.isHidden = true
+                        })
+                    }
+                }
             }
             
             camera.videoZoomFactor = currentZoomScale
@@ -274,7 +351,24 @@ class BaseCameraViewController: UIViewController ,AVCapturePhotoCaptureDelegate,
             return
         }
     }
-
+    
+    func checkState(_ state:UIGestureRecognizerState) -> String{
+        switch state {
+        case .possible:
+            return "possible"
+        case .began:
+            return "began"
+        case .cancelled:
+            return "cancelled"
+        case .changed:
+            return "changed"
+        case .ended:
+            return "ended"
+        case .failed:
+            return "failed"
+        }
+    }
+    
     @IBOutlet weak var zoomSlider: UISlider!
     @IBAction func zoomSlider(_ sender: UISlider) {
         do {
@@ -285,7 +379,16 @@ class BaseCameraViewController: UIViewController ,AVCapturePhotoCaptureDelegate,
             print("error")
         }
     }
+    @IBOutlet weak var actionSettingButton: UIButton!
     
+    @IBAction func actionSettingButton(_ sender: Any) {
+        //設定画面へ
+        let storyboard: UIStoryboard = UIStoryboard(name: "Setting", bundle: nil)
+        let nextView =  storyboard.instantiateInitialViewController()
+        nextView?.modalTransitionStyle = .flipHorizontal
+        self.present(nextView!, animated: true, completion: nil)
+
+    }
     
     @IBAction func actionBackButton(_ sender: AnyObject) {
         //トップ画面に戻る。

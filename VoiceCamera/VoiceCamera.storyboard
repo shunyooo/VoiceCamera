@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,8 +23,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yWb-GT-PUq">
+                                <rect key="frame" x="0.0" y="20" width="375" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hbq-cH-kzb">
+                                        <rect key="frame" x="322" y="8.5" width="33" height="33"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="33" id="TO0-ZH-J3Z"/>
+                                            <constraint firstAttribute="width" secondItem="hbq-cH-kzb" secondAttribute="height" multiplier="1:1" id="bHL-11-Mwp"/>
+                                        </constraints>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" image="setting"/>
+                                        <connections>
+                                            <action selector="actionSettingButton:" destination="6Np-ee-F3V" eventType="touchUpInside" id="GWi-1y-X3q"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="CUg-hC-W0j"/>
+                                    <constraint firstItem="hbq-cH-kzb" firstAttribute="centerY" secondItem="yWb-GT-PUq" secondAttribute="centerY" id="LCQ-72-TnY"/>
+                                    <constraint firstAttribute="trailing" secondItem="hbq-cH-kzb" secondAttribute="trailing" constant="20" id="Zf5-LS-As8"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E7S-cB-8x8" userLabel="Cam View">
-                                <rect key="frame" x="0.0" y="20" width="375" height="549"/>
+                                <rect key="frame" x="0.0" y="70" width="375" height="499"/>
+                                <color key="backgroundColor" red="1" green="0.60858147009999997" blue="0.59719494429999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="音声認識ラベル" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4QD-wJ-lEI">
                                 <rect key="frame" x="33" y="491" width="309" height="39"/>
@@ -93,10 +117,12 @@
                                     <action selector="VoiceButton:" destination="6Np-ee-F3V" eventType="touchUpInside" id="pUo-lh-ULZ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UTJ-vp-hk6">
-                                <rect key="frame" x="295" y="597" width="32" height="46"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UTJ-vp-hk6">
+                                <rect key="frame" x="304" y="597" width="31" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="3yB-zA-OW9"/>
+                                    <constraint firstAttribute="width" secondItem="UTJ-vp-hk6" secondAttribute="height" multiplier="16:23" id="tpx-VW-pAW"/>
+                                </constraints>
                                 <state key="normal" image="flash-off"/>
                                 <connections>
                                     <action selector="flashModeBtn:" destination="6Np-ee-F3V" eventType="touchUpInside" id="ue9-te-C6U"/>
@@ -108,25 +134,30 @@
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="yWb-GT-PUq" firstAttribute="top" secondItem="LT4-JR-r6W" secondAttribute="bottom" id="2h1-5T-qMQ"/>
                             <constraint firstItem="bep-fm-5kp" firstAttribute="leading" secondItem="BNW-yL-dgr" secondAttribute="leadingMargin" constant="17" id="4zE-xf-qUD"/>
                             <constraint firstItem="lUN-FG-zne" firstAttribute="top" secondItem="E2m-8B-ybp" secondAttribute="bottom" id="5kp-ic-K5t"/>
-                            <constraint firstItem="Vlh-ew-eDS" firstAttribute="top" secondItem="BTJ-Ct-HcQ" secondAttribute="bottom" constant="20" id="805-mI-We0"/>
+                            <constraint firstItem="BTJ-Ct-HcQ" firstAttribute="top" secondItem="E2m-8B-ybp" secondAttribute="bottom" constant="14" id="7zV-Va-8NR"/>
                             <constraint firstItem="E7S-cB-8x8" firstAttribute="leading" secondItem="BNW-yL-dgr" secondAttribute="leading" id="8DA-xy-OuK"/>
                             <constraint firstItem="E2m-8B-ybp" firstAttribute="top" secondItem="4QD-wJ-lEI" secondAttribute="bottom" constant="19" id="9gb-G4-Yp6"/>
                             <constraint firstItem="4QD-wJ-lEI" firstAttribute="top" secondItem="8ba-kJ-OIl" secondAttribute="bottom" constant="10" id="BVh-3s-w0S"/>
                             <constraint firstItem="Vlh-ew-eDS" firstAttribute="top" secondItem="lUN-FG-zne" secondAttribute="bottom" constant="8" id="Bg0-uh-hJv"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="UTJ-vp-hk6" secondAttribute="trailing" constant="24" id="D8s-L1-xE6"/>
                             <constraint firstAttribute="trailingMargin" secondItem="8ba-kJ-OIl" secondAttribute="trailing" constant="15" id="FEs-8r-2DN"/>
-                            <constraint firstItem="E7S-cB-8x8" firstAttribute="top" secondItem="LT4-JR-r6W" secondAttribute="bottom" id="Hgq-C5-ALe"/>
                             <constraint firstItem="E2m-8B-ybp" firstAttribute="leading" secondItem="BNW-yL-dgr" secondAttribute="leadingMargin" constant="24" id="JA3-Hp-dSu"/>
                             <constraint firstItem="BTJ-Ct-HcQ" firstAttribute="leading" secondItem="BNW-yL-dgr" secondAttribute="leadingMargin" constant="24" id="Vjg-UI-5Zf"/>
                             <constraint firstAttribute="trailing" secondItem="E7S-cB-8x8" secondAttribute="trailing" id="XP3-V0-8dx"/>
+                            <constraint firstAttribute="trailing" secondItem="yWb-GT-PUq" secondAttribute="trailing" id="Z1v-aP-xSc"/>
+                            <constraint firstItem="UTJ-vp-hk6" firstAttribute="top" secondItem="E2m-8B-ybp" secondAttribute="bottom" constant="18" id="Zu4-Bi-Oii"/>
                             <constraint firstItem="lUN-FG-zne" firstAttribute="top" secondItem="E7S-cB-8x8" secondAttribute="bottom" constant="10" id="a8f-Fr-cJC"/>
+                            <constraint firstItem="yWb-GT-PUq" firstAttribute="leading" secondItem="BNW-yL-dgr" secondAttribute="leading" id="auE-FX-QeI"/>
                             <constraint firstItem="lUN-FG-zne" firstAttribute="centerX" secondItem="BNW-yL-dgr" secondAttribute="centerX" id="csP-gV-Z7G"/>
+                            <constraint firstItem="bep-fm-5kp" firstAttribute="top" secondItem="E2m-8B-ybp" secondAttribute="bottom" constant="48" id="fOe-nb-Tjv"/>
                             <constraint firstAttribute="trailingMargin" secondItem="4QD-wJ-lEI" secondAttribute="trailing" constant="17" id="gOU-n8-Ys7"/>
                             <constraint firstItem="4QD-wJ-lEI" firstAttribute="leading" secondItem="BNW-yL-dgr" secondAttribute="leadingMargin" constant="17" id="kp4-cn-c30"/>
                             <constraint firstAttribute="trailingMargin" secondItem="E2m-8B-ybp" secondAttribute="trailing" constant="24" id="l1U-oH-fEy"/>
-                            <constraint firstItem="Vlh-ew-eDS" firstAttribute="top" secondItem="bep-fm-5kp" secondAttribute="bottom" constant="20" id="rGF-ep-bss"/>
                             <constraint firstItem="8ba-kJ-OIl" firstAttribute="leading" secondItem="BNW-yL-dgr" secondAttribute="leadingMargin" constant="15" id="z7b-hW-Yhn"/>
+                            <constraint firstItem="E7S-cB-8x8" firstAttribute="top" secondItem="yWb-GT-PUq" secondAttribute="bottom" id="zNG-Wv-5nr"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -141,6 +172,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
+                        <outlet property="actionSettingButton" destination="hbq-cH-kzb" id="4R4-b2-Lfc"/>
                         <outlet property="cameraView" destination="E7S-cB-8x8" id="ai3-OK-kmB"/>
                         <outlet property="flashModeBtn" destination="UTJ-vp-hk6" id="FbI-Ya-GMP"/>
                         <outlet property="icon" destination="jQs-9K-XTf" id="hom-2b-aLH"/>
@@ -159,7 +191,8 @@
     <resources>
         <image name="btn" width="132" height="132"/>
         <image name="camera" width="128" height="128"/>
-        <image name="flash-off" width="50" height="70"/>
+        <image name="flash-off" width="70" height="118"/>
         <image name="microphone" width="256" height="256"/>
+        <image name="setting" width="100" height="100"/>
     </resources>
 </document>

@@ -17,6 +17,9 @@ class VoiceCameraController: DefaultCameraViewController {
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var recIndicator: UIActivityIndicatorView!
     
+    private let shutterCommands = ["シャッター","とって","君の声を聞かせて","とれ","1 +1 = 2"]
+    
+    
     // "ja-JP"を指定すると日本語になります。
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "ja-JP"))!
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
@@ -94,14 +97,28 @@ class VoiceCameraController: DefaultCameraViewController {
             guard let `self` = self else { return }
             
             var isFinal = false
+            var isReced = false
             
             if let result = result {
-                self.label.text = result.bestTranscription.formattedString
+                if self.label.text != result.bestTranscription.formattedString{
+
+                    self.label.text = result.bestTranscription.formattedString
+                    //コマンドがラベルに含まれていたらシャッター
+                    for command in self.shutterCommands{
+                        if (self.label.text?.contains(command))!{
+                            print(command," < ",self.label.text ?? "nil")
+                            self.takeIt(self)
+                            isReced = true
+                            break;
+                        }
+                    }
+                }
+                
                 isFinal = result.isFinal
             }
             
             // エラーがある、もしくは最後の認識結果だった場合の処理
-            if error != nil || isFinal {
+            if error != nil || isFinal || isReced{
                 self.audioEngine.stop()
                 inputNode.removeTap(onBus: 0)
                 
@@ -158,6 +175,19 @@ class VoiceCameraController: DefaultCameraViewController {
         }
     }
     
+    // 音声でシャッターした時は、切る。
+    @IBAction override func takeIt(_ sender: AnyObject) {
+        if audioEngine.isRunning {
+            audioEngine.stop()
+            recognitionRequest?.endAudio()
+            voiceButton.isEnabled = false
+            statusLabel.text = "停止中"
+            recIndicator.stopAnimating()
+            recIndicator.isHidden = true
+        }
+        super.takeIt(sender)
+    }
+    
     
     func alert(title:String,message:String){
         // アラート表示
@@ -168,7 +198,6 @@ class VoiceCameraController: DefaultCameraViewController {
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
     }
-
 }
 
 
